@@ -20,10 +20,62 @@ To Implement Diffie Hellman Key Exchange Algorithm
 
 ## Program:
 
+```
+#include <stdio.h>
+#include <math.h>
 
+int modExp(int base, int exp, int mod) {
+    int result = 1;
+    base = base % mod;
+    while (exp > 0) {
+        if (exp % 2 == 1) {
+            result = (result * base) % mod;
+        }
+        exp = exp >> 1;
+        base = (base * base) % mod;
+    }
+    return result;
+}
+
+int main() {
+   
+    int p = 23;  
+    int g = 5;   
+    
+    int a, b;
+    printf("Enter Alice's private key: ");
+    scanf("%d", &a);
+    printf("Enter Bob's private key: ");
+    scanf("%d", &b);
+    
+    int A = modExp(g, a, p);  
+    int B = modExp(g, b, p);  
+    
+    printf("Alice's Public Key: %d\n", A);
+    printf("Bob's Public Key: %d\n", B);
+    
+   
+    int sharedKeyAlice = modExp(B, a, p);  
+ 
+    int sharedKeyBob = modExp(A, b, p);   
+    
+    printf("Shared Secret Key (Alice): %d\n", sharedKeyAlice);
+    printf("Shared Secret Key (Bob): %d\n", sharedKeyBob);
+    
+    if (sharedKeyAlice == sharedKeyBob) {
+        printf("Key Exchange Successful! Shared Secret Key: %d\n", sharedKeyAlice);
+    } else {
+        printf("Key Exchange Failed!\n");
+    }
+    return 0;
+}
+
+
+```
 
 ## Output:
 
+![image](https://github.com/user-attachments/assets/f3fc3ee9-f8bf-4c24-9410-fbd227d06e7e)
 
 
 ## Result:
